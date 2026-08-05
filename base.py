@@ -14,8 +14,7 @@ from bs4 import BeautifulSoup
 
 class BaseCrawler(ABC):
     """所有爬蟲的基礎類別"""
-
-    # 請求設定
+    
     HEADERS = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
@@ -24,26 +23,24 @@ class BaseCrawler(ABC):
         "Connection": "keep-alive",
         "Upgrade-Insecure-Requests": "1",
     }
-
-    # 重試設定
+    
     MAX_RETRIES = 3
     RETRY_DELAY = 2
     REQUEST_TIMEOUT = 15
-
+    
     def __init__(self):
         self.session = requests.Session()
         self.session.headers.update(self.HEADERS)
-
+    
     def fetch_url(self, url, retries=None):
         """帶重試機制的請求"""
         retries = retries or self.MAX_RETRIES
         for attempt in range(retries):
             try:
-                # 隨機延遲避免被封
                 if attempt > 0:
                     time.sleep(self.RETRY_DELAY + random.uniform(0, 1))
-
-                resp = self.session.get(url, timeout=self.RETRY_TIMEOUT)
+                
+                resp = self.session.get(url, timeout=self.REQUEST_TIMEOUT)
                 resp.raise_for_status()
                 resp.encoding = 'utf-8'
                 return resp
@@ -52,11 +49,11 @@ class BaseCrawler(ABC):
                 if attempt == retries - 1:
                     raise
         return None
-
+    
     def parse_soup(self, html):
         """解析 HTML"""
         return BeautifulSoup(html, 'lxml')
-
+    
     def make_deal(self, shop, cat, title, price_now, price_was="", save="", 
                   valid="", tags=None, link="", emoji=""):
         """建立標準化的優惠字典"""
@@ -72,7 +69,7 @@ class BaseCrawler(ABC):
             "tags": tags or [],
             "link": link,
         }
-
+    
     def calc_save(self, now, was):
         """計算折扣百分比"""
         try:
@@ -84,7 +81,7 @@ class BaseCrawler(ABC):
         except:
             pass
         return ""
-
+    
     @abstractmethod
     def fetch(self):
         """子類必須實現此方法，回傳 deals list"""
