@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-慳島 Saan Dou - 香港Jetso自動爬蟲系統
+慳島 Haanisland - 香港Jetso自動爬蟲系統
 每日自動爬取10間零售商最新優惠
 """
 
