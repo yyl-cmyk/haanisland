@@ -3,251 +3,537 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⛰️ 慳島 — 香港每日最新Jetso</title>
+<title>慳島 Saan Dou — 香港每日最新Jetso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+TC:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap');
   :root {
-    --bg: #f0f2f5; --surface: #ffffff; --text-primary: #1a1a2e;
-    --text-secondary: #6b7280; --text-tertiary: #9ca3af; --border: #e5e7eb;
-    --c-supermarket: #10b981; --c-convenience: #3b82f6;
-    --c-electronics: #8b5cf6; --c-department: #f43f5e;
-    --accent: #f59e0b; --danger: #ef4444; --success: #10b981;
-    --shadow: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -1px rgba(0,0,0,0.03);
-    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
-    --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-    --radius: 12px; --radius-lg: 16px; --radius-xl: 20px; --radius-full: 9999px;
+    --bg: #f8fafc;
+    --surface: rgba(255,255,255,0.85);
+    --surface-solid: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-tertiary: #94a3b8;
+    --border: rgba(226,232,240,0.6);
+    --border-light: rgba(241,245,249,0.8);
+    --shadow-glass: 0 8px 32px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.02);
+    --shadow-float: 0 20px 60px -15px rgba(0,0,0,0.1);
+    --radius-sm: 10px;
+    --radius: 14px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+    --radius-full: 9999px;
   }
+
+  [data-theme="dark"] {
+    --bg: #0f172a;
+    --surface: rgba(30,41,59,0.7);
+    --surface-solid: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-tertiary: #64748b;
+    --border: rgba(51,65,85,0.5);
+    --border-light: rgba(30,41,59,0.5);
+    --shadow-glass: 0 8px 32px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.2);
+    --shadow-float: 0 20px 60px -15px rgba(0,0,0,0.4);
+  }
+
   * { margin:0; padding:0; box-sizing:border-box; }
   html { scroll-behavior: smooth; }
+
   body {
-    font-family: "Noto Sans TC", -apple-system, BlinkMacSystemFont, "PingFang HK", sans-serif;
-    background: var(--bg); color: var(--text-primary); line-height: 1.6; min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
+    font-family: "Inter", "Noto Sans TC", -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg); color: var(--text-primary); line-height: 1.5;
+    min-height: 100vh; -webkit-font-smoothing: antialiased;
+    transition: background 0.3s, color 0.3s;
   }
-  .top-bar {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    color: white; padding: 0; position: sticky; top: 0; z-index: 1000;
-    box-shadow: var(--shadow-lg);
+
+  /* ===== HEADER - Glassmorphism ===== */
+  .site-header {
+    position: sticky; top: 0; z-index: 1000;
+    background: var(--surface);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s;
   }
-  .top-bar-inner {
-    max-width: 1280px; margin: 0 auto; padding: 14px 24px;
-    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  .header-inner {
+    max-width: 1320px; margin: 0 auto; padding: 14px 28px;
+    display: flex; align-items: center; gap: 24px;
   }
-  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; }
-  .brand-icon {
-    width: 44px; height: 44px;
-    background: linear-gradient(135deg, #f59e0b, #f97316);
-    border-radius: var(--radius); display: flex; align-items: center; justify-content: center;
-    font-size: 22px; box-shadow: 0 4px 12px rgba(245,158,11,0.4);
-    animation: pulse-glow 2s ease-in-out infinite;
+  .brand {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none; color: var(--text-primary); flex-shrink: 0;
   }
-  @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 4px 12px rgba(245,158,11,0.4); }
-    50% { box-shadow: 0 4px 20px rgba(245,158,11,0.6); }
+  .brand-logo {
+    width: 42px; height: 42px; border-radius: 14px;
+    background: linear-gradient(135deg, #f59e0b, #f97316, #ef4444);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; box-shadow: 0 4px 16px rgba(245,158,11,0.35);
+    position: relative; overflow: hidden;
   }
-  .brand-name { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; }
-  .brand-tagline { font-size: 12px; opacity: 0.7; font-weight: 400; }
-  .search-box { position: relative; flex: 1; max-width: 480px; }
+  .brand-logo::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+    animation: shine 3s ease-in-out infinite;
+  }
+  @keyframes shine {
+    0%, 100% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+  }
+  .brand-text { display: flex; flex-direction: column; }
+  .brand-name { font-size: 19px; font-weight: 800; letter-spacing: -0.5px; }
+  .brand-tagline { font-size: 11px; color: var(--text-tertiary); font-weight: 500; }
+
+  .search-box {
+    position: relative; flex: 1; max-width: 400px;
+  }
   .search-box input {
-    width: 100%; padding: 12px 16px 12px 44px;
-    border: 2px solid rgba(255,255,255,0.15); border-radius: var(--radius-full);
-    background: rgba(255,255,255,0.1); color: white; font-size: 15px; font-family: inherit;
-    transition: all 0.3s ease;
+    width: 100%; padding: 11px 16px 11px 42px;
+    border: 1.5px solid var(--border); border-radius: var(--radius-full);
+    background: var(--bg); font-size: 14px; font-family: inherit;
+    color: var(--text-primary); transition: all 0.25s;
   }
-  .search-box input::placeholder { color: rgba(255,255,255,0.5); }
+  .search-box input::placeholder { color: var(--text-tertiary); }
   .search-box input:focus {
-    outline: none; background: rgba(255,255,255,0.15);
-    border-color: rgba(245,158,11,0.6); box-shadow: 0 0 0 4px rgba(245,158,11,0.15);
+    outline: none; border-color: #f59e0b;
+    box-shadow: 0 0 0 4px rgba(245,158,11,0.12);
   }
-  .search-box .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 16px; opacity: 0.6; }
-  .header-actions { display: flex; align-items: center; gap: 12px; }
-  .header-badge {
-    background: rgba(245,158,11,0.2); color: #fbbf24; padding: 8px 16px;
-    border-radius: var(--radius-full); font-size: 13px; font-weight: 600;
-    border: 1px solid rgba(245,158,11,0.3); white-space: nowrap;
+  .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 14px; opacity: 0.4; }
+
+  .header-actions {
+    display: flex; align-items: center; gap: 10px; flex-shrink: 0;
   }
-  .hero-section {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    color: white; padding: 48px 24px 64px; position: relative; overflow: hidden;
+  .theme-toggle {
+    width: 38px; height: 38px; border-radius: 12px;
+    border: 1.5px solid var(--border); background: var(--surface);
+    cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
   }
-  .hero-section::before {
-    content: ''; position: absolute; top: -50%; right: -10%; width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%);
-    border-radius: 50%; pointer-events: none;
+  .theme-toggle:hover { transform: scale(1.08); border-color: #f59e0b; }
+  .update-chip {
+    background: linear-gradient(135deg, #fef3c7, #fffbeb);
+    color: #92400e; padding: 7px 14px; border-radius: var(--radius-full);
+    font-size: 12px; font-weight: 600; border: 1px solid #fde68a;
+    white-space: nowrap;
   }
-  .hero-section::after {
-    content: ''; position: absolute; bottom: -30%; left: -5%; width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%);
-    border-radius: 50%; pointer-events: none;
+  [data-theme="dark"] .update-chip {
+    background: linear-gradient(135deg, #451a03, #78350f);
+    color: #fcd34d; border-color: #92400e;
   }
-  .hero-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; text-align: center; }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(245,158,11,0.15); color: #fbbf24; padding: 6px 16px;
-    border-radius: var(--radius-full); font-size: 13px; font-weight: 600;
-    margin-bottom: 20px; border: 1px solid rgba(245,158,11,0.25);
-    animation: fadeInDown 0.6s ease both;
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 30%, #312e81 60%, #1e293b 100%);
+    padding: 72px 28px 96px;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(245,158,11,0.15), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 50%, rgba(124,58,237,0.1), transparent);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.03;
+    background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-inner {
+    max-width: 1320px; margin: 0 auto; position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+  .hero-left { text-align: left; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(245,158,11,0.15); color: #fbbf24;
+    padding: 6px 16px; border-radius: var(--radius-full);
+    font-size: 13px; font-weight: 600; margin-bottom: 24px;
+    border: 1px solid rgba(245,158,11,0.25); backdrop-filter: blur(10px);
   }
   .hero-title {
-    font-size: clamp(32px, 5vw, 52px); font-weight: 900; line-height: 1.15;
-    margin-bottom: 16px; letter-spacing: -1px; animation: fadeInUp 0.6s 0.1s ease both;
+    font-size: clamp(36px, 5vw, 56px); font-weight: 900;
+    line-height: 1.08; letter-spacing: -2px; margin-bottom: 16px;
+    color: white;
   }
-  .hero-title .highlight {
-    background: linear-gradient(135deg, #fbbf24, #f59e0b, #f97316);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  .hero-title .gradient-text {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b, #f97316, #ef4444);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
-  .hero-subtitle {
-    font-size: 18px; color: rgba(255,255,255,0.65); max-width: 560px;
-    margin: 0 auto 32px; animation: fadeInUp 0.6s 0.2s ease both;
+  .hero-desc {
+    font-size: 17px; color: rgba(255,255,255,0.55); max-width: 440px;
+    margin-bottom: 32px; font-weight: 400; line-height: 1.6;
   }
   .hero-stats {
-    display: flex; justify-content: center; gap: 40px;
-    animation: fadeInUp 0.6s 0.3s ease both;
+    display: flex; gap: 32px;
   }
-  .stat-item { text-align: center; }
-  .stat-number { font-size: 32px; font-weight: 900; color: #fbbf24; line-height: 1; }
-  .stat-label { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 4px; }
-  .cat-nav-wrap { max-width: 1280px; margin: -28px auto 0; padding: 0 24px; position: relative; z-index: 10; }
-  .cat-nav {
-    display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
-    background: var(--surface); padding: 12px; border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-lg); border: 1px solid var(--border);
+  .h-stat { display: flex; flex-direction: column; gap: 4px; }
+  .h-stat-num { font-size: 32px; font-weight: 800; color: #fbbf24; line-height: 1; }
+  .h-stat-label { font-size: 13px; color: rgba(255,255,255,0.4); }
+
+  .hero-right {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    transform: perspective(1000px) rotateY(-8deg) rotateX(4deg);
+    transition: transform 0.5s;
   }
-  .cat-btn {
-    display: flex; align-items: center; gap: 8px; padding: 12px 20px;
-    border-radius: var(--radius-lg); border: 2px solid transparent;
-    background: transparent; cursor: pointer; font-family: inherit;
-    font-size: 15px; font-weight: 600; color: var(--text-secondary);
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); position: relative; white-space: nowrap;
+  .hero:hover .hero-right { transform: perspective(1000px) rotateY(-4deg) rotateX(2deg); }
+  .hero-card {
+    background: rgba(255,255,255,0.08); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-lg);
+    padding: 20px; color: white; transition: all 0.3s;
   }
-  .cat-btn:hover { background: #f3f4f6; color: var(--text-primary); transform: translateY(-1px); }
-  .cat-btn.active { color: white; border-color: transparent; box-shadow: var(--shadow); }
-  .cat-btn.active[data-cat="all"] { background: linear-gradient(135deg, #1a1a2e, #0f3460); }
-  .cat-btn.active[data-cat="supermarket"] { background: linear-gradient(135deg, #10b981, #059669); }
-  .cat-btn.active[data-cat="convenience"] { background: linear-gradient(135deg, #3b82f6, #2563eb); }
-  .cat-btn.active[data-cat="electronics"] { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
-  .cat-btn.active[data-cat="department"] { background: linear-gradient(135deg, #f43f5e, #e11d48); }
-  .cat-btn .cat-emoji { font-size: 18px; }
-  .cat-btn .cat-count {
-    background: rgba(0,0,0,0.08); color: inherit; padding: 2px 8px;
-    border-radius: var(--radius-full); font-size: 12px; font-weight: 700; min-width: 24px; text-align: center;
+  .hero-card:hover { background: rgba(255,255,255,0.12); transform: translateY(-4px); }
+  .hero-card .hc-icon { font-size: 32px; margin-bottom: 10px; }
+  .hero-card .hc-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .hero-card .hc-desc { font-size: 12px; color: rgba(255,255,255,0.5); }
+
+  /* ===== CATEGORY BAR ===== */
+  .cat-bar-wrap {
+    max-width: 1320px; margin: -28px auto 0; padding: 0 28px;
+    position: relative; z-index: 10;
   }
-  .cat-btn.active .cat-count { background: rgba(255,255,255,0.25); color: white; }
-  .main-content { max-width: 1280px; margin: 0 auto; padding: 40px 24px 60px; }
-  .featured-section { margin-bottom: 48px; }
-  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-  .section-title-group { display: flex; align-items: center; gap: 12px; }
-  .section-icon {
-    width: 40px; height: 40px; border-radius: var(--radius);
-    display: flex; align-items: center; justify-content: center; font-size: 20px;
+  .cat-bar {
+    display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+    background: var(--surface); padding: 10px;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-glass);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(20px);
   }
-  .section-icon.gold { background: linear-gradient(135deg, #fbbf24, #f59e0b); box-shadow: 0 4px 12px rgba(245,158,11,0.3); }
-  .section-icon.green { background: linear-gradient(135deg, #34d399, #10b981); box-shadow: 0 4px 12px rgba(16,185,129,0.3); }
-  .section-icon.blue { background: linear-gradient(135deg, #60a5fa, #3b82f6); box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
-  .section-icon.purple { background: linear-gradient(135deg, #a78bfa, #8b5cf6); box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
-  .section-icon.rose { background: linear-gradient(135deg, #fb7185, #f43f5e); box-shadow: 0 4px 12px rgba(244,63,94,0.3); }
-  .section-title { font-size: 22px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.3px; }
-  .section-subtitle { font-size: 14px; color: var(--text-secondary); margin-top: 2px; }
-  .view-all-btn {
-    font-size: 14px; font-weight: 600; color: var(--text-secondary); text-decoration: none;
-    display: flex; align-items: center; gap: 4px; padding: 8px 14px; border-radius: var(--radius); transition: all 0.2s;
+  .cat-pill {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 20px; border-radius: var(--radius-lg);
+    border: 2px solid transparent; background: transparent;
+    cursor: pointer; font-family: inherit; font-size: 14px;
+    font-weight: 600; color: var(--text-secondary);
+    transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
   }
-  .view-all-btn:hover { background: #f3f4f6; color: var(--text-primary); }
-  .featured-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-  .featured-card {
-    background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border);
-    overflow: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; position: relative;
+  .cat-pill:hover { background: var(--border-light); color: var(--text-primary); transform: translateY(-1px); }
+  .cat-pill.active { color: white; border-color: transparent; box-shadow: var(--shadow-glass); }
+  .cat-pill.active[data-cat="all"] { background: linear-gradient(135deg, #0f172a, #334155); }
+  .cat-pill.active[data-cat="supermarket"] { background: linear-gradient(135deg, #059669, #10b981); }
+  .cat-pill.active[data-cat="convenience"] { background: linear-gradient(135deg, #2563eb, #3b82f6); }
+  .cat-pill.active[data-cat="electronics"] { background: linear-gradient(135deg, #7c3aed, #a855f7); }
+  .cat-pill.active[data-cat="department"] { background: linear-gradient(135deg, #db2777, #ec4899); }
+  .cat-pill .cat-emoji { font-size: 18px; }
+  .cat-pill .cat-badge {
+    background: rgba(0,0,0,0.06); color: inherit;
+    padding: 2px 8px; border-radius: var(--radius-full);
+    font-size: 11px; font-weight: 700; min-width: 22px; text-align: center;
   }
-  .featured-card::before {
+  .cat-pill.active .cat-badge { background: rgba(255,255,255,0.25); color: white; }
+
+  /* ===== MAIN ===== */
+  .main { max-width: 1320px; margin: 0 auto; padding: 56px 28px 80px; }
+
+  /* Section */
+  .sec-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 24px; gap: 16px;
+  }
+  .sec-title-wrap { display: flex; align-items: center; gap: 14px; }
+  .sec-icon {
+    width: 48px; height: 48px; border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .sec-icon.gold { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+  .sec-icon.green { background: linear-gradient(135deg, #34d399, #059669); }
+  .sec-icon.blue { background: linear-gradient(135deg, #60a5fa, #2563eb); }
+  .sec-icon.purple { background: linear-gradient(135deg, #a78bfa, #7c3aed); }
+  .sec-icon.rose { background: linear-gradient(135deg, #fb7185, #db2777); }
+  .sec-icon.orange { background: linear-gradient(135deg, #fb923c, #f97316); }
+  .sec-icon.teal { background: linear-gradient(135deg, #2dd4bf, #14b8a6); }
+  .sec-title { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+  .sec-subtitle { font-size: 13px; color: var(--text-tertiary); margin-top: 2px; }
+  .sec-more {
+    font-size: 13px; font-weight: 600; color: var(--text-tertiary);
+    text-decoration: none; display: flex; align-items: center; gap: 4px;
+    padding: 8px 16px; border-radius: var(--radius); transition: all 0.2s;
+    background: var(--surface); border: 1px solid var(--border);
+  }
+  .sec-more:hover { color: var(--text-primary); border-color: var(--text-tertiary); }
+
+  /* ===== FEATURED CARDS ===== */
+  .featured-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;
+    margin-bottom: 64px;
+  }
+  .feat-card {
+    background: var(--surface); border-radius: var(--radius-xl);
+    border: 1px solid var(--border); overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+    cursor: pointer; position: relative;
+    box-shadow: var(--shadow-glass);
+    backdrop-filter: blur(10px);
+  }
+  .feat-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-float);
+    border-color: rgba(245,158,11,0.3);
+  }
+  .feat-card::before {
     content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-    background: linear-gradient(90deg, #f59e0b, #f97316); opacity: 0; transition: opacity 0.3s;
+    background: linear-gradient(90deg, #f59e0b, #f97316, #ef4444);
+    opacity: 0; transition: opacity 0.3s;
   }
-  .featured-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); border-color: #fbbf24; }
-  .featured-card:hover::before { opacity: 1; }
-  .featured-img-wrap {
-    height: 140px; background: linear-gradient(135deg, #1a1a2e, #0f3460);
-    display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
+  .feat-card:hover::before { opacity: 1; }
+
+  .feat-visual {
+    height: 170px; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
   }
-  .featured-img-wrap .shop-emoji { font-size: 48px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); animation: float 3s ease-in-out infinite; }
-  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-  .featured-img-wrap .discount-ribbon {
-    position: absolute; top: 12px; right: -28px;
-    background: linear-gradient(135deg, #ef4444, #dc2626); color: white;
-    padding: 4px 32px; font-size: 12px; font-weight: 800;
-    transform: rotate(45deg); box-shadow: 0 2px 8px rgba(239,68,68,0.4);
+  .feat-visual.supermarket { background: linear-gradient(135deg, #059669, #10b981, #34d399); }
+  .feat-visual.convenience { background: linear-gradient(135deg, #2563eb, #3b82f6, #60a5fa); }
+  .feat-visual.electronics { background: linear-gradient(135deg, #7c3aed, #a855f7, #c084fc); }
+  .feat-visual.department { background: linear-gradient(135deg, #db2777, #ec4899, #f472b6); }
+  .feat-visual .fv-pattern {
+    position: absolute; inset: 0; opacity: 0.1;
+    background: radial-gradient(circle at 20% 50%, white 2px, transparent 2px),
+                radial-gradient(circle at 80% 50%, white 2px, transparent 2px);
+    background-size: 40px 40px;
   }
-  .featured-body { padding: 16px; }
-  .featured-shop { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-  .featured-shop.supermarket { color: var(--c-supermarket); }
-  .featured-shop.convenience { color: var(--c-convenience); }
-  .featured-shop.electronics { color: var(--c-electronics); }
-  .featured-shop.department { color: var(--c-department); }
-  .featured-title { font-size: 15px; font-weight: 700; line-height: 1.45; margin-bottom: 12px; color: var(--text-primary); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .featured-price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
-  .featured-price-now { font-size: 24px; font-weight: 900; color: var(--danger); line-height: 1; }
-  .featured-price-was { font-size: 14px; color: var(--text-tertiary); text-decoration: line-through; }
-  .featured-save { background: #fee2e2; color: var(--danger); padding: 3px 10px; border-radius: var(--radius-full); font-size: 12px; font-weight: 700; }
-  .featured-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid #f3f4f6; }
-  .featured-validity { font-size: 12px; color: var(--text-tertiary); display: flex; align-items: center; gap: 4px; }
-  .featured-link { font-size: 13px; font-weight: 700; color: var(--text-primary); text-decoration: none; display: flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: var(--radius-sm); background: var(--bg); transition: all 0.2s; }
-  .featured-link:hover { background: var(--text-primary); color: white; }
-  .deals-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 16px; }
+  .feat-visual .fv-emoji {
+    font-size: 72px; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.3));
+    z-index: 1; animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100%{transform:translateY(0) rotate(-3deg);} 50%{transform:translateY(-10px) rotate(3deg);} }
+  .feat-visual .fv-badge {
+    position: absolute; top: 12px; left: 12px;
+    background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+    padding: 5px 12px; border-radius: var(--radius-full);
+    font-size: 11px; font-weight: 700; z-index: 2;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .feat-visual .fv-save {
+    position: absolute; top: 12px; right: 12px;
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    color: white; padding: 5px 12px; border-radius: var(--radius-full);
+    font-size: 12px; font-weight: 800; z-index: 2;
+    box-shadow: 0 4px 12px rgba(220,38,38,0.3);
+  }
+
+  .feat-body { padding: 20px; }
+  .feat-title {
+    font-size: 15px; font-weight: 700; line-height: 1.5;
+    margin-bottom: 14px; color: var(--text-primary);
+    display: -webkit-box; -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .feat-price-row {
+    display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px;
+  }
+  .feat-price-now { font-size: 28px; font-weight: 900; color: #dc2626; line-height: 1; }
+  .feat-price-was { font-size: 14px; color: var(--text-tertiary); text-decoration: line-through; }
+  .feat-save-tag {
+    background: #fef2f2; color: #dc2626;
+    padding: 3px 10px; border-radius: var(--radius-full);
+    font-size: 12px; font-weight: 700;
+  }
+  .feat-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 14px; border-top: 1px solid var(--border);
+  }
+  .feat-valid { font-size: 12px; color: var(--text-tertiary); display: flex; align-items: center; gap: 4px; }
+  .feat-link {
+    font-size: 13px; font-weight: 700; color: var(--text-primary);
+    text-decoration: none; padding: 7px 14px; border-radius: var(--radius-sm);
+    background: var(--bg); border: 1px solid var(--border); transition: all 0.2s;
+  }
+  .feat-link:hover { background: var(--text-primary); color: white; border-color: var(--text-primary); }
+
+  /* ===== DEAL CARDS ===== */
+  .deals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 20px;
+  }
   .deal-card {
-    background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border);
-    overflow: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative;
+    background: var(--surface); border-radius: var(--radius-xl);
+    border: 1px solid var(--border); overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+    display: flex; flex-direction: column;
+    box-shadow: var(--shadow-glass);
+    backdrop-filter: blur(10px);
   }
-  .deal-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--border); }
+  .deal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-float);
+    border-color: rgba(245,158,11,0.2);
+  }
   .deal-card.hidden { display: none; }
-  .deal-top-bar { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px 10px; }
-  .shop-pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: var(--radius-full); font-size: 12px; font-weight: 700; }
-  .shop-pill.supermarket { background: #d1fae5; color: #047857; }
-  .shop-pill.convenience { background: #dbeafe; color: #1d4ed8; }
-  .shop-pill.electronics { background: #ede9fe; color: #5b21b6; }
-  .shop-pill.department { background: #ffe4e6; color: #be123c; }
-  .discount-badge {
-    background: linear-gradient(135deg, #ef4444, #dc2626); color: white;
-    padding: 5px 12px; border-radius: var(--radius-full); font-size: 13px; font-weight: 800;
-    box-shadow: 0 2px 8px rgba(239,68,68,0.25);
+
+  .deal-visual {
+    height: 130px; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
   }
-  .deal-body { padding: 0 16px 12px; }
+  .deal-visual.supermarket { background: linear-gradient(135deg, #059669, #10b981); }
+  .deal-visual.convenience { background: linear-gradient(135deg, #2563eb, #3b82f6); }
+  .deal-visual.electronics { background: linear-gradient(135deg, #7c3aed, #a855f7); }
+  .deal-visual.department { background: linear-gradient(135deg, #db2777, #ec4899); }
+  .deal-visual .dv-pattern {
+    position: absolute; inset: 0; opacity: 0.08;
+    background: radial-gradient(circle, white 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
+  }
+  .deal-visual .dv-emoji { font-size: 52px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25)); z-index: 1; }
+  .deal-visual .dv-corner {
+    position: absolute; top: 10px; right: 10px;
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    color: white; padding: 5px 12px; border-radius: var(--radius-full);
+    font-size: 12px; font-weight: 800; z-index: 2;
+    box-shadow: 0 2px 8px rgba(220,38,38,0.3);
+  }
+
+  .deal-content { padding: 18px; flex: 1; display: flex; flex-direction: column; }
+  .deal-shop-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .deal-shop-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 10px; border-radius: var(--radius-full);
+    font-size: 11px; font-weight: 700;
+  }
+  .deal-shop-pill.supermarket { background: #ecfdf5; color: #059669; }
+  .deal-shop-pill.convenience { background: #eff6ff; color: #2563eb; }
+  .deal-shop-pill.electronics { background: #f5f3ff; color: #7c3aed; }
+  .deal-shop-pill.department { background: #fdf2f8; color: #db2777; }
+  [data-theme="dark"] .deal-shop-pill.supermarket { background: rgba(5,150,105,0.15); }
+  [data-theme="dark"] .deal-shop-pill.convenience { background: rgba(37,99,235,0.15); }
+  [data-theme="dark"] .deal-shop-pill.electronics { background: rgba(124,58,237,0.15); }
+  [data-theme="dark"] .deal-shop-pill.department { background: rgba(219,39,119,0.15); }
+
   .deal-title { font-size: 15px; font-weight: 700; line-height: 1.5; margin-bottom: 10px; color: var(--text-primary); }
   .deal-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
-  .deal-tag { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: var(--radius-full); display: inline-flex; align-items: center; gap: 3px; }
-  .deal-tag.hot { background: #fee2e2; color: #b91c1c; }
-  .deal-tag.new { background: #dbeafe; color: #1e40af; }
-  .deal-tag.limited { background: #fef3c7; color: #92400e; }
-  .deal-tag.member { background: #ede9fe; color: #5b21b6; }
-  .deal-price-block { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
-  .price-now { font-size: 26px; font-weight: 900; color: var(--danger); line-height: 1; }
-  .price-was { font-size: 14px; color: var(--text-tertiary); text-decoration: line-through; }
-  .price-save { background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 4px 12px; border-radius: var(--radius-full); font-size: 12px; font-weight: 800; box-shadow: 0 2px 6px rgba(16,185,129,0.3); }
-  .deal-footer { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px 14px; border-top: 1px solid #f3f4f6; gap: 8px; }
-  .validity-info { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-tertiary); }
-  .validity-info .clock-icon { font-size: 13px; }
+  .d-tag {
+    font-size: 11px; font-weight: 700; padding: 3px 10px;
+    border-radius: var(--radius-full); display: inline-flex; align-items: center; gap: 3px;
+  }
+  .d-tag.hot { background: #fef2f2; color: #991b1b; }
+  .d-tag.new { background: #eff6ff; color: #1e40af; }
+  .d-tag.limited { background: #fffbeb; color: #92400e; }
+  .d-tag.member { background: #f5f3ff; color: #6b21a8; }
+  .d-tag.forecast { background: #f0fdf4; color: #166534; }
+  [data-theme="dark"] .d-tag.hot { background: rgba(153,27,27,0.2); }
+  [data-theme="dark"] .d-tag.new { background: rgba(30,64,175,0.2); }
+  [data-theme="dark"] .d-tag.limited { background: rgba(146,64,14,0.2); }
+  [data-theme="dark"] .d-tag.member { background: rgba(107,33,168,0.2); }
+  [data-theme="dark"] .d-tag.forecast { background: rgba(22,101,52,0.2); }
+
+  .deal-price { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: auto; margin-bottom: 4px; }
+  .dp-now { font-size: 24px; font-weight: 900; color: #dc2626; line-height: 1; }
+  .dp-was { font-size: 13px; color: var(--text-tertiary); text-decoration: line-through; }
+  .dp-save {
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: white; padding: 3px 10px; border-radius: var(--radius-full);
+    font-size: 11px; font-weight: 800;
+    box-shadow: 0 2px 6px rgba(5,150,105,0.25);
+  }
+
+  .deal-bottom {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 18px 16px; border-top: 1px solid var(--border); gap: 8px;
+  }
+  .deal-valid { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-tertiary); }
   .deal-actions { display: flex; gap: 6px; }
-  .action-btn {
-    display: flex; align-items: center; justify-content: center; width: 36px; height: 36px;
-    border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface);
-    cursor: pointer; font-size: 16px; transition: all 0.2s; color: var(--text-secondary);
+  .d-btn {
+    display: flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border); background: var(--surface);
+    cursor: pointer; font-size: 15px; transition: all 0.2s; color: var(--text-tertiary);
   }
-  .action-btn:hover { background: #f3f4f6; color: var(--text-primary); transform: scale(1.05); }
-  .action-btn.bookmarked { background: #fee2e2; border-color: var(--danger); color: var(--danger); }
-  .action-btn-primary {
-    display: flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: var(--radius-sm);
-    background: var(--text-primary); color: white; font-size: 13px; font-weight: 700;
-    text-decoration: none; border: none; cursor: pointer; font-family: inherit; transition: all 0.2s;
+  .d-btn:hover { background: var(--bg); color: var(--text-primary); transform: scale(1.08); }
+  .d-btn.saved { background: #fef2f2; border-color: #fecaca; color: #dc2626; }
+  .d-btn-primary {
+    display: flex; align-items: center; gap: 5px;
+    padding: 8px 16px; border-radius: var(--radius-sm);
+    background: var(--text-primary); color: white;
+    font-size: 12px; font-weight: 700; text-decoration: none;
+    border: none; cursor: pointer; font-family: inherit; transition: all 0.2s;
   }
-  .action-btn-primary:hover { background: #2d2d44; transform: translateY(-1px); box-shadow: var(--shadow); }
+  .d-btn-primary:hover { background: #1e293b; transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+  /* ===== FORECAST SECTION ===== */
+  .forecast-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;
+    margin-bottom: 64px;
+  }
+  .forecast-card {
+    background: var(--surface); border-radius: var(--radius-lg);
+    border: 1px solid var(--border); padding: 20px;
+    transition: all 0.3s; position: relative; overflow: hidden;
+    box-shadow: var(--shadow-glass);
+  }
+  .forecast-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .forecast-card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+    background: linear-gradient(180deg, #f59e0b, #f97316);
+  }
+  .fc-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .fc-date {
+    background: linear-gradient(135deg, #fef3c7, #fffbeb);
+    color: #92400e; padding: 4px 10px; border-radius: var(--radius-full);
+    font-size: 12px; font-weight: 700;
+  }
+  .fc-type {
+    font-size: 11px; font-weight: 600; color: var(--text-tertiary);
+    padding: 3px 8px; border-radius: var(--radius-full);
+    background: var(--bg);
+  }
+  .fc-title { font-size: 14px; font-weight: 700; line-height: 1.5; margin-bottom: 8px; }
+  .fc-shop { font-size: 12px; color: var(--text-tertiary); font-weight: 600; }
+
+  /* ===== FOOTER ===== */
   .site-footer {
-    background: linear-gradient(135deg, #1a1a2e, #16213e); color: rgba(255,255,255,0.6);
-    padding: 40px 24px; text-align: center; font-size: 13px;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: rgba(255,255,255,0.45); padding: 48px 28px; text-align: center; font-size: 13px;
   }
   .site-footer p { margin-bottom: 6px; }
-  .footer-brand { font-size: 18px; font-weight: 800; color: white; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-  @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-  .deal-card { animation: fadeInUp 0.5s ease both; }
-  .featured-card { animation: fadeInUp 0.5s ease both; }
+  .footer-brand {
+    font-size: 20px; font-weight: 900; color: white; margin-bottom: 10px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .footer-brand .logo-pulse {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+    animation: pulse-ring 2s ease-out infinite;
+  }
+  @keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgba(245,158,11,0.5); }
+    70% { box-shadow: 0 0 0 8px rgba(245,158,11,0); }
+    100% { box-shadow: 0 0 0 0 rgba(245,158,11,0); }
+  }
+
+  /* ===== STATES ===== */
+  .state-box { text-align: center; padding: 100px 20px; }
+  .state-emoji { font-size: 64px; margin-bottom: 20px; }
+  .state-title { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+  .state-desc { font-size: 15px; color: var(--text-tertiary); }
+  .loading-emoji { animation: bounce 2s ease-in-out infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);} }
+  .error-title { color: #dc2626; }
+
+  /* ===== TOAST ===== */
+  .toast {
+    position: fixed; bottom: 28px; left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--text-primary); color: white;
+    padding: 14px 28px; border-radius: var(--radius-lg);
+    font-size: 14px; font-weight: 600;
+    box-shadow: var(--shadow-float); z-index: 9999;
+    opacity: 0; transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+    pointer-events: none;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .deal-card, .feat-card, .forecast-card {
+    animation: fadeInUp 0.6s ease both;
+  }
   .deals-grid .deal-card:nth-child(1) { animation-delay: 0.02s; }
   .deals-grid .deal-card:nth-child(2) { animation-delay: 0.04s; }
   .deals-grid .deal-card:nth-child(3) { animation-delay: 0.06s; }
@@ -256,374 +542,772 @@
   .deals-grid .deal-card:nth-child(6) { animation-delay: 0.12s; }
   .deals-grid .deal-card:nth-child(7) { animation-delay: 0.14s; }
   .deals-grid .deal-card:nth-child(8) { animation-delay: 0.16s; }
-  .featured-grid .featured-card:nth-child(1) { animation-delay: 0.02s; }
-  .featured-grid .featured-card:nth-child(2) { animation-delay: 0.05s; }
-  .featured-grid .featured-card:nth-child(3) { animation-delay: 0.08s; }
-  .featured-grid .featured-card:nth-child(4) { animation-delay: 0.11s; }
-  .featured-grid .featured-card:nth-child(5) { animation-delay: 0.14s; }
-  .toast {
-    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
-    background: var(--text-primary); color: white; padding: 12px 24px;
-    border-radius: var(--radius-lg); font-size: 14px; font-weight: 600;
-    box-shadow: var(--shadow-xl); z-index: 9999; opacity: 0;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;
-  }
-  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-  .loading-state { text-align: center; padding: 60px 20px; }
-  .loading-state .loading-emoji { font-size: 48px; margin-bottom: 12px; animation: bounce 1s infinite; }
-  @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-  .loading-state .loading-title { font-size: 18px; font-weight: 700; color: var(--text-secondary); margin-bottom: 6px; }
-  .loading-state .loading-desc { font-size: 14px; color: var(--text-tertiary); }
-  .empty-state { text-align: center; padding: 60px 20px; color: var(--text-tertiary); }
-  .empty-state .empty-emoji { font-size: 48px; margin-bottom: 12px; }
-  .empty-state .empty-title { font-size: 18px; font-weight: 700; color: var(--text-secondary); margin-bottom: 6px; }
-  .empty-state .empty-desc { font-size: 14px; }
-  .error-state { text-align: center; padding: 60px 20px; }
-  .error-state .error-emoji { font-size: 48px; margin-bottom: 12px; }
-  .error-state .error-title { font-size: 18px; font-weight: 700; color: var(--danger); margin-bottom: 6px; }
-  .error-state .error-desc { font-size: 14px; color: var(--text-secondary); }
+
+  /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {
-    .top-bar-inner { flex-wrap: wrap; padding: 12px 16px; }
-    .search-box { order: 3; max-width: 100%; width: 100%; }
-    .hero-section { padding: 32px 16px 48px; }
-    .hero-title { font-size: 28px; }
-    .hero-stats { gap: 24px; }
-    .stat-number { font-size: 24px; }
-    .cat-nav-wrap { padding: 0 12px; }
-    .cat-nav { gap: 6px; padding: 8px; }
-    .cat-btn { padding: 10px 14px; font-size: 13px; }
-    .main-content { padding: 28px 16px 40px; }
+    .header-inner { flex-wrap: wrap; padding: 10px 16px; gap: 10px; }
+    .search-wrap { order: 3; max-width: 100%; width: 100%; }
+    .hero { padding: 48px 16px 64px; }
+    .hero-inner { grid-template-columns: 1fr; gap: 32px; }
+    .hero-left { text-align: center; }
+    .hero-desc { margin: 0 auto 28px; }
+    .hero-stats { justify-content: center; }
+    .hero-right { transform: none; display: none; }
+    .cat-bar-wrap { padding: 0 12px; }
+    .cat-bar { gap: 6px; padding: 8px; }
+    .cat-pill { padding: 8px 14px; font-size: 13px; }
+    .main { padding: 32px 16px 48px; }
     .deals-grid { grid-template-columns: 1fr; }
     .featured-grid { grid-template-columns: 1fr; }
-    .section-header { flex-wrap: wrap; gap: 8px; }
+    .forecast-grid { grid-template-columns: 1fr; }
+    .sec-header { flex-wrap: wrap; }
   }
+
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+  /* ===== CALENDAR ===== */
+  .calendar-wrap {
+    max-width: 1320px; margin: 24px auto 0; padding: 0 28px;
+    position: relative; z-index: 5;
+  }
+  .calendar-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px; gap: 16px; flex-wrap: wrap;
+  }
+  .cal-title { display: flex; align-items: center; gap: 12px; }
+  .cal-icon { font-size: 28px; }
+  .cal-title-text { font-size: 18px; font-weight: 800; color: var(--text-primary); }
+  .cal-subtitle { font-size: 12px; color: var(--text-tertiary); margin-top: 2px; }
+  .cal-nav {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--surface); padding: 6px; border-radius: var(--radius-lg);
+    border: 1px solid var(--border); box-shadow: var(--shadow-glass);
+  }
+  .cal-btn {
+    width: 36px; height: 36px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border); background: var(--bg);
+    cursor: pointer; font-size: 14px; color: var(--text-secondary);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .cal-btn:hover { background: var(--text-primary); color: white; border-color: var(--text-primary); }
+  .cal-month { font-size: 15px; font-weight: 700; color: var(--text-primary); min-width: 120px; text-align: center; }
+
+  .cal-legend {
+    display: flex; gap: 16px; margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .cal-legend-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--text-secondary); font-weight: 500;
+  }
+  .cal-dot {
+    width: 10px; height: 10px; border-radius: 50%; display: inline-block;
+  }
+  .cal-dot.start { background: #059669; }
+  .cal-dot.end { background: #dc2626; }
+  .cal-dot.both { background: linear-gradient(135deg, #059669, #dc2626); }
+  .cal-dot.active { background: #f59e0b; }
+
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    background: var(--surface); padding: 20px; border-radius: var(--radius-xl);
+    border: 1px solid var(--border); box-shadow: var(--shadow-glass);
+    backdrop-filter: blur(10px);
+  }
+  .cal-weekday {
+    text-align: center; font-size: 12px; font-weight: 700;
+    color: var(--text-tertiary); padding: 8px 4px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .cal-day {
+    aspect-ratio: 1; min-height: 80px;
+    border-radius: var(--radius); border: 1.5px solid var(--border-light);
+    background: var(--bg); padding: 8px;
+    cursor: pointer; transition: all 0.2s;
+    display: flex; flex-direction: column; position: relative;
+    overflow: hidden;
+  }
+  .cal-day:hover {
+    border-color: #f59e0b; transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245,158,11,0.15);
+  }
+  .cal-day.selected {
+    border-color: #f59e0b; background: #fffbeb;
+    box-shadow: 0 0 0 3px rgba(245,158,11,0.15);
+  }
+  [data-theme="dark"] .cal-day.selected { background: rgba(245,158,11,0.1); }
+  .cal-day.other-month { opacity: 0.35; }
+  .cal-day-num {
+    font-size: 14px; font-weight: 700; color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .cal-day.today .cal-day-num {
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+    color: white; width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; font-size: 13px;
+  }
+  .cal-day-badges {
+    display: flex; flex-direction: column; gap: 2px; flex: 1;
+    overflow: hidden;
+  }
+  .cal-day-badge {
+    font-size: 9px; font-weight: 700; padding: 2px 6px;
+    border-radius: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .cal-day-badge.start { background: #d1fae5; color: #065f46; }
+  .cal-day-badge.end { background: #fee2e2; color: #991b1b; }
+  .cal-day-badge.both { background: linear-gradient(90deg, #d1fae5, #fee2e2); color: #374151; }
+  .cal-day-badge.count {
+    background: var(--border-light); color: var(--text-secondary);
+    text-align: center; font-size: 10px;
+  }
+  .cal-day-more {
+    font-size: 9px; color: var(--text-tertiary); text-align: center; margin-top: 2px;
+  }
+
+  .cal-filter-info {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    margin-top: 16px; padding: 12px 20px;
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border-radius: var(--radius-lg); border: 1px solid #fde68a;
+    font-size: 14px; font-weight: 600; color: #92400e;
+  }
+  [data-theme="dark"] .cal-filter-info {
+    background: linear-gradient(135deg, #451a03, #78350f);
+    color: #fcd34d; border-color: #92400e;
+  }
+  .cal-clear-btn {
+    background: white; color: #92400e; border: 1px solid #fde68a;
+    padding: 4px 12px; border-radius: var(--radius-sm);
+    font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s;
+  }
+  .cal-clear-btn:hover { background: #fef3c7; }
+  [data-theme="dark"] .cal-clear-btn { background: rgba(255,255,255,0.1); color: #fcd34d; border-color: #92400e; }
+
+  @media (max-width: 768px) {
+    .calendar-wrap { padding: 0 12px; margin-top: 16px; }
+    .calendar-grid { padding: 12px; gap: 4px; }
+    .cal-day { min-height: 60px; padding: 4px; }
+    .cal-day-num { font-size: 12px; }
+    .cal-day-badge { font-size: 8px; padding: 1px 4px; }
+    .cal-legend { gap: 10px; }
+    .cal-legend-item { font-size: 11px; }
+  }
+
 </style>
 </head>
 <body>
 
 <div class="toast" id="toast"></div>
 
-<header class="top-bar">
-  <div class="top-bar-inner">
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
     <a href="#" class="brand">
-      <div class="brand-icon">🔥</div>
-      <div>
+      <div class="brand-logo">⛰️</div>
+      <div class="brand-text">
         <div class="brand-name">慳島</div>
-        <div class="brand-tagline">每日更新 · 全港Jetso盡在慳島</div>
+        <div class="brand-tagline">Saan Dou · 全港Jetso盡在慳島</div>
       </div>
     </a>
     <div class="search-box">
       <span class="search-icon">🔍</span>
-      <input type="text" id="searchInput" placeholder="搜尋優惠、店舖、商品名稱...">
+      <input type="text" id="searchInput" placeholder="搜尋優惠、店舖、商品...">
     </div>
     <div class="header-actions">
-      <div class="header-badge" id="updateBadge">📅 載入中...</div>
+      <button class="theme-toggle" id="themeToggle" title="切換主題">🌙</button>
+      <div class="update-chip" id="updateChip">📅 載入中...</div>
     </div>
   </div>
 </header>
 
-<section class="hero-section">
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
   <div class="hero-inner">
-    <div class="hero-badge">
-      <span>⛰️</span> <span id="heroBadgeText">慳島 · 載入中...</span>
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <span>⛰️</span> <span id="heroEyebrow">慳島 · 載入中...</span>
+      </div>
+      <h1 class="hero-title">全港最抵<br><span class="gradient-text">Jetso 盡在慳島</span></h1>
+      <p class="hero-desc">整合百佳、惠康、7-Eleven、豐澤、SOGO 等十大零售商最新優惠，幫你慳到盡！</p>
+      <div class="hero-stats">
+        <div class="h-stat">
+          <div class="h-stat-num" id="statTotal">0</div>
+          <div class="h-stat-label">今日優惠</div>
+        </div>
+        <div class="h-stat">
+          <div class="h-stat-num" id="statForecast">0</div>
+          <div class="h-stat-label">本週預告</div>
+        </div>
+        <div class="h-stat">
+          <div class="h-stat-num">10</div>
+          <div class="h-stat-label">合作商戶</div>
+        </div>
+      </div>
     </div>
-    <h1 class="hero-title">
-      全港最抵<br><span class="highlight">Jetso 盡在慳島</span>
-    </h1>
-    <p class="hero-subtitle">
-      整合百佳、惠康、7-Eleven、豐澤、SOGO 等十大零售商最新優惠，幫你慳到盡！
-    </p>
-    <div class="hero-stats">
-      <div class="stat-item">
-        <div class="stat-number" id="statTotal">0</div>
-        <div class="stat-label">今日優惠</div>
+    <div class="hero-right">
+      <div class="hero-card">
+        <div class="hc-icon">🥬</div>
+        <div class="hc-title">超市優惠</div>
+        <div class="hc-desc">百佳、惠康、AEON 每日特價</div>
       </div>
-      <div class="stat-item">
-        <div class="stat-number">10</div>
-        <div class="stat-label">合作商戶</div>
+      <div class="hero-card">
+        <div class="hc-icon">🏪</div>
+        <div class="hc-title">便利店</div>
+        <div class="hc-desc">7-Eleven、Circle K 著數</div>
       </div>
-      <div class="stat-item">
-        <div class="stat-number">4</div>
-        <div class="stat-label">分類類別</div>
+      <div class="hero-card">
+        <div class="hc-icon">📱</div>
+        <div class="hc-title">電器數碼</div>
+        <div class="hc-desc">豐澤、百老匯、小米減價</div>
+      </div>
+      <div class="hero-card">
+        <div class="hc-icon">🛍️</div>
+        <div class="hc-title">百貨商場</div>
+        <div class="hc-desc">SOGO、DONKI 感謝祭</div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="cat-nav-wrap">
-  <nav class="cat-nav">
-    <button class="cat-btn active" data-cat="all" onclick="filterCat('all')">
-      <span class="cat-emoji">🏠</span><span>全部</span><span class="cat-count" id="count-all">0</span>
+<!-- CATEGORY BAR -->
+<div class="cat-bar-wrap">
+  <nav class="cat-bar">
+    <button class="cat-pill active" data-cat="all" onclick="filterCat('all')">
+      <span class="cat-emoji">🏠</span><span>全部</span><span class="cat-badge" id="badge-all">0</span>
     </button>
-    <button class="cat-btn" data-cat="supermarket" onclick="filterCat('supermarket')">
-      <span class="cat-emoji">🥬</span><span>超市</span><span class="cat-count" id="count-supermarket">0</span>
+    <button class="cat-pill" data-cat="supermarket" onclick="filterCat('supermarket')">
+      <span class="cat-emoji">🥬</span><span>超市</span><span class="cat-badge" id="badge-supermarket">0</span>
     </button>
-    <button class="cat-btn" data-cat="convenience" onclick="filterCat('convenience')">
-      <span class="cat-emoji">🏪</span><span>便利店</span><span class="cat-count" id="count-convenience">0</span>
+    <button class="cat-pill" data-cat="convenience" onclick="filterCat('convenience')">
+      <span class="cat-emoji">🏪</span><span>便利店</span><span class="cat-badge" id="badge-convenience">0</span>
     </button>
-    <button class="cat-btn" data-cat="electronics" onclick="filterCat('electronics')">
-      <span class="cat-emoji">📱</span><span>電器</span><span class="cat-count" id="count-electronics">0</span>
+    <button class="cat-pill" data-cat="electronics" onclick="filterCat('electronics')">
+      <span class="cat-emoji">📱</span><span>電器</span><span class="cat-badge" id="badge-electronics">0</span>
     </button>
-    <button class="cat-btn" data-cat="department" onclick="filterCat('department')">
-      <span class="cat-emoji">🛍️</span><span>百貨</span><span class="cat-count" id="count-department">0</span>
+    <button class="cat-pill" data-cat="department" onclick="filterCat('department')">
+      <span class="cat-emoji">🛍️</span><span>百貨</span><span class="cat-badge" id="badge-department">0</span>
     </button>
   </nav>
 </div>
 
-<main class="main-content">
-  <div id="loadingState" class="loading-state">
-    <div class="loading-emoji">⛰️</div>
-    <div class="loading-title">正在載入最新優惠...</div>
-    <div class="loading-desc">慳島為你搜羅全港最抵Jetso</div>
+<!-- MAIN -->
+
+<!-- MONTHLY CALENDAR -->
+<div class="calendar-wrap" id="calendarWrap">
+  <div class="calendar-header">
+    <div class="cal-title">
+      <div class="cal-icon">📅</div>
+      <div>
+        <div class="cal-title-text">優惠月曆</div>
+        <div class="cal-subtitle">點擊日期查看當天優惠</div>
+      </div>
+    </div>
+    <div class="cal-nav">
+      <button class="cal-btn" onclick="changeMonth(-1)">◀</button>
+      <div class="cal-month" id="calMonth">2026年8月</div>
+      <button class="cal-btn" onclick="changeMonth(1)">▶</button>
+    </div>
+  </div>
+  <div class="cal-legend">
+    <div class="cal-legend-item"><span class="cal-dot start"></span>優惠開始</div>
+    <div class="cal-legend-item"><span class="cal-dot end"></span>優惠結束</div>
+    <div class="cal-legend-item"><span class="cal-dot both"></span>開始+結束</div>
+    <div class="cal-legend-item"><span class="cal-dot active"></span>進行中</div>
+  </div>
+  <div class="calendar-grid" id="calendarGrid"></div>
+  <div class="cal-filter-info" id="calFilterInfo" style="display:none">
+    <span id="calFilterText"></span>
+    <button class="cal-clear-btn" onclick="clearCalendarFilter()">清除篩選 ✕</button>
+  </div>
+</div>
+
+<main class="main">
+
+  <!-- Loading -->
+  <div id="loadingState" class="state-box">
+    <div class="state-emoji loading-emoji">⛰️</div>
+    <div class="state-title">正在載入最新優惠...</div>
+    <div class="state-desc">慳島為你搜羅全港最抵Jetso</div>
   </div>
 
+  <!-- Content -->
   <div id="contentArea" style="display:none">
-    <section class="featured-section" id="featuredSection">
-      <div class="section-header">
-        <div class="section-title-group">
-          <div class="section-icon gold">⭐</div>
+
+    <!-- Featured -->
+    <section id="featuredSection">
+      <div class="sec-header">
+        <div class="sec-title-wrap">
+          <div class="sec-icon gold">⭐</div>
           <div>
-            <div class="section-title">今日精選最抵買</div>
-            <div class="section-subtitle">編輯推薦 · 手慢無</div>
+            <div class="sec-title">今日精選最抵買</div>
+            <div class="sec-subtitle">編輯推薦 · 手慢無</div>
           </div>
         </div>
       </div>
       <div class="featured-grid" id="featuredGrid"></div>
     </section>
 
-    <section class="section-block" data-section="supermarket">
-      <div class="section-header">
-        <div class="section-title-group">
-          <div class="section-icon green">🥬</div>
-          <div><div class="section-title">超市優惠</div><div class="section-subtitle">百佳 · 惠康 · AEON</div></div>
+    <!-- Forecast -->
+    <section id="forecastSection" style="margin-top:64px">
+      <div class="sec-header">
+        <div class="sec-title-wrap">
+          <div class="sec-icon orange">📅</div>
+          <div>
+            <div class="sec-title">本週預告</div>
+            <div class="sec-subtitle">即將開始 / 即將到期 · 把握最後機會</div>
+          </div>
         </div>
-        <a href="#" class="view-all-btn" onclick="filterCat('supermarket'); return false;">查看全部 →</a>
+      </div>
+      <div class="forecast-grid" id="forecastGrid"></div>
+    </section>
+
+    <!-- Supermarket -->
+    <section class="sec-block" data-section="supermarket" style="margin-top:64px">
+      <div class="sec-header">
+        <div class="sec-title-wrap">
+          <div class="sec-icon green">🥬</div>
+          <div><div class="sec-title">超市優惠</div><div class="sec-subtitle">百佳 · 惠康 · AEON</div></div>
+        </div>
+        <a href="#" class="sec-more" onclick="filterCat('supermarket'); return false;">查看全部 →</a>
       </div>
       <div class="deals-grid" id="grid-supermarket"></div>
     </section>
 
-    <section class="section-block" data-section="convenience">
-      <div class="section-header">
-        <div class="section-title-group">
-          <div class="section-icon blue">🏪</div>
-          <div><div class="section-title">便利店優惠</div><div class="section-subtitle">7-Eleven · Circle K</div></div>
+    <!-- Convenience -->
+    <section class="sec-block" data-section="convenience" style="margin-top:64px">
+      <div class="sec-header">
+        <div class="sec-title-wrap">
+          <div class="sec-icon blue">🏪</div>
+          <div><div class="sec-title">便利店優惠</div><div class="sec-subtitle">7-Eleven · Circle K</div></div>
         </div>
-        <a href="#" class="view-all-btn" onclick="filterCat('convenience'); return false;">查看全部 →</a>
+        <a href="#" class="sec-more" onclick="filterCat('convenience'); return false;">查看全部 →</a>
       </div>
       <div class="deals-grid" id="grid-convenience"></div>
     </section>
 
-    <section class="section-block" data-section="electronics">
-      <div class="section-header">
-        <div class="section-title-group">
-          <div class="section-icon purple">📱</div>
-          <div><div class="section-title">電器優惠</div><div class="section-subtitle">豐澤 · 百老匯 · 小米</div></div>
+    <!-- Electronics -->
+    <section class="sec-block" data-section="electronics" style="margin-top:64px">
+      <div class="sec-header">
+        <div class="sec-title-wrap">
+          <div class="sec-icon purple">📱</div>
+          <div><div class="sec-title">電器優惠</div><div class="sec-subtitle">豐澤 · 百老匯 · 小米</div></div>
         </div>
-        <a href="#" class="view-all-btn" onclick="filterCat('electronics'); return false;">查看全部 →</a>
+        <a href="#" class="sec-more" onclick="filterCat('electronics'); return false;">查看全部 →</a>
       </div>
       <div class="deals-grid" id="grid-electronics"></div>
     </section>
 
-    <section class="section-block" data-section="department">
-      <div class="section-header">
-        <div class="section-title-group">
-          <div class="section-icon rose">🛍️</div>
-          <div><div class="section-title">百貨優惠</div><div class="section-subtitle">SOGO · DONKI</div></div>
+    <!-- Department -->
+    <section class="sec-block" data-section="department" style="margin-top:64px">
+      <div class="sec-header">
+        <div class="sec-title-wrap">
+          <div class="sec-icon rose">🛍️</div>
+          <div><div class="sec-title">百貨優惠</div><div class="sec-subtitle">SOGO · DONKI</div></div>
         </div>
-        <a href="#" class="view-all-btn" onclick="filterCat('department'); return false;">查看全部 →</a>
+        <a href="#" class="sec-more" onclick="filterCat('department'); return false;">查看全部 →</a>
       </div>
       <div class="deals-grid" id="grid-department"></div>
     </section>
+
   </div>
 
-  <div id="errorState" class="error-state" style="display:none">
-    <div class="error-emoji">😢</div>
-    <div class="error-title">載入失敗</div>
-    <div class="error-desc">無法取得最新優惠資料，請稍後再試。</div>
+  <!-- Error -->
+  <div id="errorState" class="state-box" style="display:none">
+    <div class="state-emoji">😢</div>
+    <div class="state-title error-title">載入失敗</div>
+    <div class="state-desc">無法取得最新優惠資料，請稍後再試。</div>
   </div>
+
 </main>
 
+<!-- FOOTER -->
 <footer class="site-footer">
-  <div class="footer-brand">⛰️ 慳島</div>
+  <div class="footer-brand"><div class="logo-pulse"></div>慳島 Saan Dou</div>
   <p>資料來源：各零售商官方網站及社交平台 · 優惠以店舖公佈為準</p>
   <p id="footerUpdate">最後更新：載入中...</p>
 </footer>
 
 <script>
-let allDeals = [];
-let meta = {};
+let allDeals = [], forecastDeals = [], meta = {};
 const bookmarks = new Set();
+const tagMap = { hot:'🔥 熱賣', new:'✨ 新品', limited:'⏰ 限時', member:'👤 會員', forecast:'🔮 預告' };
+
+// Theme toggle
+const themeToggle = document.getElementById('themeToggle');
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+function updateThemeIcon() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  themeToggle.textContent = isDark ? '☀️' : '🌙';
+}
+updateThemeIcon();
+themeToggle.addEventListener('click', () => {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  updateThemeIcon();
+});
 
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
 }
-
 function toggleBookmark(id, btn) {
-  if (bookmarks.has(id)) {
-    bookmarks.delete(id); btn.classList.remove('bookmarked'); btn.textContent = '🔖';
-    showToast('已取消收藏');
-  } else {
-    bookmarks.add(id); btn.classList.add('bookmarked'); btn.textContent = '🔴';
-    showToast('已加入收藏');
-  }
+  if (bookmarks.has(id)) { bookmarks.delete(id); btn.classList.remove('saved'); btn.textContent = '🔖'; showToast('已取消收藏'); }
+  else { bookmarks.add(id); btn.classList.add('saved'); btn.textContent = '❤️'; showToast('已加入收藏'); }
 }
-
-function copyLink(link) {
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(link).then(() => showToast('連結已複製'));
-  } else {
-    showToast('連結: ' + link);
-  }
-}
-
+function copyLink(link) { navigator.clipboard?.writeText(link).then(() => showToast('連結已複製')) || showToast(link); }
 function renderTags(tags) {
-  if (!tags || tags.length === 0) return '';
-  const map = { hot: '🔥 熱賣', new: '✨ 新品', limited: '⏰ 限時', member: '👤 會員' };
-  return '<div class="deal-tags">' + tags.map(t => `<span class="deal-tag ${t}">${map[t] || t}</span>`).join('') + '</div>';
+  if (!tags?.length) return '';
+  return '<div class="deal-tags">' + tags.map(t => `<span class="d-tag ${t}">${tagMap[t]||t}</span>`).join('') + '</div>';
 }
 
 function renderFeaturedCard(d, idx) {
-  const priceRow = d.priceNow ?
-    `<div class="featured-price-row"><span class="featured-price-now">${d.priceNow}</span>${d.priceWas ? `<span class="featured-price-was">${d.priceWas}</span>` : ''}${d.save ? `<span class="featured-save">${d.save}</span>` : ''}</div>` : '';
-  const ribbon = d.save ? `<div class="discount-ribbon">${d.save}</div>` : '';
-  return `<div class="featured-card" data-cat="${d.cat}" data-shop="${d.shop}" data-title="${d.title}" style="animation-delay:${idx*0.05}s">
-    <div class="featured-img-wrap"><span class="shop-emoji">${d.emoji || '🏷️'}</span>${ribbon}</div>
-    <div class="featured-body">
-      <div class="featured-shop ${d.cat}">${d.shop}</div>
-      <div class="featured-title">${d.title}</div>
+  const priceRow = d.priceNow ? `<div class="feat-price-row"><span class="feat-price-now">${d.priceNow}</span>${d.priceWas?`<span class="feat-price-was">${d.priceWas}</span>`:''}${d.save?`<span class="feat-save-tag">${d.save}</span>`:''}</div>` : '';
+  return `<div class="feat-card" data-cat="${d.cat}" data-shop="${d.shop}" data-title="${d.title}" style="animation-delay:${idx*0.05}s">
+    <div class="feat-visual ${d.cat}">
+      <div class="fv-pattern"></div>
+      <span class="fv-emoji">${d.emoji||'🏷️'}</span>
+      <div class="fv-badge">${d.shop}</div>
+      ${d.save?`<div class="fv-save">${d.save}</div>`:''}
+    </div>
+    <div class="feat-body">
+      <div class="feat-title">${d.title}</div>
       ${priceRow}
-      <div class="featured-footer">
-        <div class="featured-validity">📅 ${d.valid || '請查看官網'}</div>
-        <a href="${d.link}" target="_blank" class="featured-link">詳情 ↗</a>
+      <div class="feat-footer">
+        <div class="feat-valid">📅 ${d.valid||'請查看官網'}</div>
+        <a href="${d.link}" target="_blank" class="feat-link">詳情 ↗</a>
       </div>
     </div>
   </div>`;
 }
 
 function renderDealCard(d, idx) {
-  const id = 'deal-' + Math.random().toString(36).substr(2, 9);
-  const priceBlock = d.priceNow ?
-    `<div class="deal-price-block"><span class="price-now">${d.priceNow}</span>${d.priceWas ? `<span class="price-was">${d.priceWas}</span>` : ''}${d.save ? `<span class="price-save">${d.save}</span>` : ''}</div>` : '';
-  const isBookmarked = bookmarks.has(id) ? 'bookmarked' : '';
-  const bookmarkIcon = bookmarks.has(id) ? '🔴' : '🔖';
+  const id = 'd-' + Math.random().toString(36).substr(2, 7);
+  const priceBlock = d.priceNow ? `<div class="deal-price"><span class="dp-now">${d.priceNow}</span>${d.priceWas?`<span class="dp-was">${d.priceWas}</span>`:''}${d.save?`<span class="dp-save">${d.save}</span>`:''}</div>` : '';
+  const saved = bookmarks.has(id) ? 'saved' : '';
+  const bIcon = bookmarks.has(id) ? '❤️' : '🔖';
   return `<div class="deal-card" data-cat="${d.cat}" data-shop="${d.shop}" data-title="${d.title}" style="animation-delay:${(idx%10)*0.02}s">
-    <div class="deal-top-bar">
-      <span class="shop-pill ${d.cat}">${d.emoji || '🏷️'} ${d.shop}</span>
-      ${d.save ? `<span class="discount-badge">${d.save}</span>` : ''}
+    <div class="deal-visual ${d.cat}">
+      <div class="dv-pattern"></div>
+      <span class="dv-emoji">${d.emoji||'🏷️'}</span>
+      ${d.save?`<div class="dv-corner">${d.save}</div>`:''}
     </div>
-    <div class="deal-body">
+    <div class="deal-content">
+      <div class="deal-shop-row">
+        <span class="deal-shop-pill ${d.cat}">${d.emoji||'🏷️'} ${d.shop}</span>
+      </div>
       <div class="deal-title">${d.title}</div>
       ${renderTags(d.tags)}
       ${priceBlock}
     </div>
-    <div class="deal-footer">
-      <div class="validity-info"><span class="clock-icon">⏱</span><span>${d.valid || '請查看官網'}</span></div>
+    <div class="deal-bottom">
+      <div class="deal-valid">⏱ ${d.valid||'請查看官網'}</div>
       <div class="deal-actions">
-        <button class="action-btn ${isBookmarked}" onclick="toggleBookmark('${id}', this)" title="收藏">${bookmarkIcon}</button>
-        <button class="action-btn" onclick="copyLink('${d.link}')" title="複製連結">🔗</button>
-        <a href="${d.link}" target="_blank" class="action-btn-primary">查看 ↗</a>
+        <button class="d-btn ${saved}" onclick="toggleBookmark('${id}',this)" title="收藏">${bIcon}</button>
+        <button class="d-btn" onclick="copyLink('${d.link}')" title="複製連結">🔗</button>
+        <a href="${d.link}" target="_blank" class="d-btn-primary">查看 ↗</a>
       </div>
     </div>
+  </div>`;
+}
+
+function renderForecastCard(d, idx) {
+  const typeLabel = d.forecastType === 'upcoming' ? '即將開始' : '即將到期';
+  const typeColor = d.forecastType === 'upcoming' ? '#059669' : '#dc2626';
+  return `<div class="forecast-card" style="animation-delay:${idx*0.03}s">
+    <div class="fc-header">
+      <div class="fc-date">${d.forecastDate || d.valid}</div>
+      <div class="fc-type" style="color:${typeColor}">${typeLabel}</div>
+    </div>
+    <div class="fc-title">${d.title}</div>
+    <div class="fc-shop">${d.emoji||'🏷️'} ${d.shop}</div>
   </div>`;
 }
 
 function renderAll() {
   const cats = ['supermarket','convenience','electronics','department'];
   cats.forEach(cat => {
-    const grid = document.getElementById('grid-' + cat);
     const items = allDeals.filter(d => d.cat === cat);
-    grid.innerHTML = items.map((d, i) => renderDealCard(d, i)).join('');
+    document.getElementById('grid-'+cat).innerHTML = items.map((d,i) => renderDealCard(d,i)).join('');
   });
-
   const featured = allDeals.filter(d => d.featured).sort((a,b) => (a.featuredRank||0)-(b.featuredRank||0));
-  document.getElementById('featuredGrid').innerHTML = featured.map((d, i) => renderFeaturedCard(d, i)).join('');
+  document.getElementById('featuredGrid').innerHTML = featured.map((d,i) => renderFeaturedCard(d,i)).join('');
+
+  // Forecast
+  const forecast = allDeals.filter(d => d.forecast || d.tags?.includes('forecast'));
+  document.getElementById('forecastGrid').innerHTML = forecast.map((d,i) => renderForecastCard(d,i)).join('');
+  if (forecast.length === 0) {
+    document.getElementById('forecastSection').style.display = 'none';
+  }
 
   document.getElementById('statTotal').textContent = allDeals.length;
-  document.getElementById('count-all').textContent = allDeals.length;
-  cats.forEach(cat => {
-    document.getElementById('count-' + cat).textContent = allDeals.filter(d => d.cat === cat).length;
-  });
+  document.getElementById('statForecast').textContent = forecast.length;
+  document.getElementById('badge-all').textContent = allDeals.length;
+  cats.forEach(cat => { document.getElementById('badge-'+cat).textContent = allDeals.filter(d=>d.cat===cat).length; });
 
   if (meta.updated_at) {
-    document.getElementById('updateBadge').textContent = '📅 ' + meta.updated_at.split(' ')[0];
-    document.getElementById('heroBadgeText').textContent = '慳島 · 今日已更新 ' + allDeals.length + ' 個優惠';
+    document.getElementById('updateChip').textContent = '📅 ' + meta.updated_at.split(' ')[0];
+    document.getElementById('heroEyebrow').textContent = '慳島 · 今日已更新 ' + allDeals.length + ' 個優惠';
     document.getElementById('footerUpdate').textContent = '最後更新：' + meta.updated_at + ' · 每日自動更新';
   }
 }
 
 function filterCat(cat) {
-  document.querySelectorAll('.cat-btn').forEach(t => t.classList.remove('active'));
-  document.querySelector('.cat-btn[data-cat="' + cat + '"]').classList.add('active');
-  const sections = document.querySelectorAll('.section-block');
-  const featured = document.getElementById('featuredSection');
-  if (cat === 'all') {
-    sections.forEach(s => s.style.display = '');
-    featured.style.display = '';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  } else {
-    sections.forEach(s => s.style.display = s.dataset.section === cat ? '' : 'none');
-    featured.style.display = 'none';
-    const target = document.querySelector('.section-block[data-section="' + cat + '"]');
-    if (target) { const y = target.getBoundingClientRect().top + window.scrollY - 100; window.scrollTo({ top: y, behavior: 'smooth' }); }
-  }
+  document.querySelectorAll('.cat-pill').forEach(t => t.classList.remove('active'));
+  document.querySelector('.cat-pill[data-cat="'+cat+'"]').classList.add('active');
+  const secs = document.querySelectorAll('.sec-block');
+  const feat = document.getElementById('featuredSection');
+  const fore = document.getElementById('forecastSection');
+  if (cat === 'all') { secs.forEach(s=>s.style.display=''); feat.style.display=''; fore.style.display=''; window.scrollTo({top:0,behavior:'smooth'}); }
+  else { secs.forEach(s=>s.style.display=s.dataset.section===cat?'':'none'); feat.style.display='none'; fore.style.display='none'; const t=document.querySelector('.sec-block[data-section="'+cat+'"]'); if(t){const y=t.getBoundingClientRect().top+window.scrollY-100; window.scrollTo({top:y,behavior:'smooth'});} }
 }
 
 function doSearch(q) {
   q = q.toLowerCase().trim();
-  const cards = document.querySelectorAll('.deal-card');
-  const featuredCards = document.querySelectorAll('.featured-card');
-  const sections = document.querySelectorAll('.section-block');
-  if (!q) {
-    cards.forEach(c => c.classList.remove('hidden'));
-    featuredCards.forEach(c => c.style.display = '');
-    sections.forEach(s => s.style.display = '');
-    document.getElementById('featuredSection').style.display = '';
-    return;
-  }
-  document.getElementById('featuredSection').style.display = 'none';
-  let anyVisible = {};
-  cards.forEach(c => {
-    const match = (c.dataset.shop + ' ' + c.dataset.title).toLowerCase().includes(q);
-    c.classList.toggle('hidden', !match);
-    if (match) anyVisible[c.dataset.cat] = true;
+  const cards = document.querySelectorAll('.deal-card, .feat-card, .forecast-card');
+  const secs = document.querySelectorAll('.sec-block');
+  const feat = document.getElementById('featuredSection');
+  const fore = document.getElementById('forecastSection');
+  if (!q) { cards.forEach(c=>{c.classList.remove('hidden');c.style.display='';}); secs.forEach(s=>s.style.display=''); feat.style.display=''; fore.style.display=''; return; }
+  feat.style.display='none'; fore.style.display='none';
+  let vis = {};
+  document.querySelectorAll('.deal-card').forEach(c => {
+    const m=(c.dataset.shop+' '+c.dataset.title).toLowerCase().includes(q);
+    c.classList.toggle('hidden',!m); if(m) vis[c.dataset.cat]=true;
   });
-  sections.forEach(s => { s.style.display = anyVisible[s.dataset.section] ? '' : 'none'; });
+  secs.forEach(s => { s.style.display = vis[s.dataset.section] ? '' : 'none'; });
 }
 
 document.getElementById('searchInput').addEventListener('input', e => doSearch(e.target.value));
 
 async function loadData() {
   try {
-    const paths = ['data/deals.json', './data/deals.json', '../data/deals.json'];
+    const paths = ['data/deals.json','./data/deals.json','../data/deals.json'];
     let data = null;
-    for (const path of paths) {
-      try {
-        const resp = await fetch(path + '?t=' + Date.now());
-        if (resp.ok) { data = await resp.json(); break; }
-      } catch (e) {}
-    }
-    if (!data) throw new Error('No data found');
-
-    allDeals = data.deals || [];
-    meta = data.meta || {};
-
-    document.getElementById('loadingState').style.display = 'none';
-    document.getElementById('contentArea').style.display = '';
+    for (const p of paths) { try { const r = await fetch(p+'?t='+Date.now()); if(r.ok){data=await r.json();break;} } catch(e){} }
+    if (!data) throw new Error('No data');
+    allDeals = data.deals || []; meta = data.meta || {};
+    document.getElementById('loadingState').style.display='none';
+    document.getElementById('contentArea').style.display='';
     renderAll();
-  } catch (e) {
-    console.error('Failed to load deals:', e);
-    document.getElementById('loadingState').style.display = 'none';
-    document.getElementById('errorState').style.display = '';
+    renderCalendar();
+  } catch(e) {
+    console.error(e);
+    document.getElementById('loadingState').style.display='none';
+    document.getElementById('errorState').style.display='';
+  }
+}
+loadData();
+
+// ===== CALENDAR =====
+let currentCalDate = new Date();
+let selectedCalDate = null;
+
+function parseDealDates(deals) {
+  const dateMap = {};
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  deals.forEach(deal => {
+    const valid = deal.valid || '';
+    // Match patterns like "2026年8月4日 – 8月10日" or "8月4日 – 8月10日"
+    const rangeMatch = valid.match(/(\d{4}年)?(\d{1,2})月(\d{1,2})日\s*[–-]\s*(\d{1,2})月(\d{1,2})日/);
+    const singleMatch = valid.match(/(\d{4}年)?(\d{1,2})月(\d{1,2})日/);
+
+    let startDate = null, endDate = null;
+
+    if (rangeMatch) {
+      const year = rangeMatch[1] ? parseInt(rangeMatch[1].replace('年','')) : today.getFullYear();
+      startDate = new Date(year, parseInt(rangeMatch[2])-1, parseInt(rangeMatch[3]));
+      endDate = new Date(year, parseInt(rangeMatch[4])-1, parseInt(rangeMatch[5]));
+    } else if (singleMatch) {
+      const year = singleMatch[1] ? parseInt(singleMatch[1].replace('年','')) : today.getFullYear();
+      startDate = new Date(year, parseInt(singleMatch[2])-1, parseInt(singleMatch[3]));
+      endDate = startDate;
+    }
+
+    if (startDate && endDate) {
+      const startKey = formatDateKey(startDate);
+      const endKey = formatDateKey(endDate);
+
+      if (!dateMap[startKey]) dateMap[startKey] = { starts: [], ends: [], active: [] };
+      if (!dateMap[endKey]) dateMap[endKey] = { starts: [], ends: [], active: [] };
+
+      dateMap[startKey].starts.push(deal);
+      dateMap[endKey].ends.push(deal);
+
+      // Mark all days between as active
+      let d = new Date(startDate);
+      while (d <= endDate) {
+        const key = formatDateKey(d);
+        if (!dateMap[key]) dateMap[key] = { starts: [], ends: [], active: [] };
+        if (key !== startKey && key !== endKey) {
+          dateMap[key].active.push(deal);
+        }
+        d.setDate(d.getDate() + 1);
+      }
+    }
+  });
+
+  return dateMap;
+}
+
+function formatDateKey(d) {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function renderCalendar() {
+  const year = currentCalDate.getFullYear();
+  const month = currentCalDate.getMonth();
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+  const startPadding = firstDay.getDay();
+  const daysInMonth = lastDay.getDate();
+
+  document.getElementById('calMonth').textContent = `${year}年${month+1}月`;
+
+  const dateMap = parseDealDates(allDeals);
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+  let html = weekdays.map(d => `<div class="cal-weekday">${d}</div>`).join('');
+
+  // Previous month padding
+  const prevMonth = new Date(year, month, 0);
+  for (let i = startPadding - 1; i >= 0; i--) {
+    const day = prevMonth.getDate() - i;
+    html += `<div class="cal-day other-month"><div class="cal-day-num">${day}</div></div>`;
+  }
+
+  // Current month
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dateKey = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const dateObj = new Date(year, month, day);
+    const isToday = dateObj.getTime() === today.getTime();
+    const isSelected = selectedCalDate === dateKey;
+    const data = dateMap[dateKey] || { starts: [], ends: [], active: [] };
+
+    let badges = '';
+    const totalEvents = data.starts.length + data.ends.length + data.active.length;
+
+    if (data.starts.length > 0 && data.ends.length > 0) {
+      badges += `<div class="cal-day-badge both">${data.starts.length + data.ends.length}個優惠</div>`;
+    } else {
+      if (data.starts.length > 0) badges += `<div class="cal-day-badge start">${data.starts.length}個開始</div>`;
+      if (data.ends.length > 0) badges += `<div class="cal-day-badge end">${data.ends.length}個結束</div>`;
+      if (data.active.length > 0 && totalEvents <= 2) badges += `<div class="cal-day-badge count">${data.active.length}個進行中</div>`;
+    }
+
+    if (totalEvents > 3) {
+      badges += `<div class="cal-day-more">+${totalEvents - 2} 更多</div>`;
+    }
+
+    const clickAttr = totalEvents > 0 ? `onclick="selectCalDate('${dateKey}')"` : '';
+    const cursor = totalEvents > 0 ? 'cursor:pointer' : '';
+
+    html += `
+      <div class="cal-day ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}" ${clickAttr} style="${cursor}">
+        <div class="cal-day-num">${day}</div>
+        <div class="cal-day-badges">${badges}</div>
+      </div>
+    `;
+  }
+
+  // Next month padding
+  const remaining = (7 - ((startPadding + daysInMonth) % 7)) % 7;
+  for (let day = 1; day <= remaining; day++) {
+    html += `<div class="cal-day other-month"><div class="cal-day-num">${day}</div></div>`;
+  }
+
+  document.getElementById('calendarGrid').innerHTML = html;
+}
+
+function changeMonth(delta) {
+  currentCalDate.setMonth(currentCalDate.getMonth() + delta);
+  renderCalendar();
+}
+
+function selectCalDate(dateKey) {
+  selectedCalDate = dateKey;
+  renderCalendar();
+
+  const [y, m, d] = dateKey.split('-');
+  const dateStr = `${parseInt(m)}月${parseInt(d)}日`;
+
+  // Filter deals that are active on this date
+  const dateObj = new Date(parseInt(y), parseInt(m)-1, parseInt(d));
+
+  const filtered = allDeals.filter(deal => {
+    const valid = deal.valid || '';
+    const rangeMatch = valid.match(/(\d{4}年)?(\d{1,2})月(\d{1,2})日\s*[–-]\s*(\d{1,2})月(\d{1,2})日/);
+    const singleMatch = valid.match(/(\d{4}年)?(\d{1,2})月(\d{1,2})日/);
+
+    if (rangeMatch) {
+      const year = rangeMatch[1] ? parseInt(rangeMatch[1].replace('年','')) : dateObj.getFullYear();
+      const start = new Date(year, parseInt(rangeMatch[2])-1, parseInt(rangeMatch[3]));
+      const end = new Date(year, parseInt(rangeMatch[4])-1, parseInt(rangeMatch[5]));
+      return dateObj >= start && dateObj <= end;
+    } else if (singleMatch) {
+      const year = singleMatch[1] ? parseInt(singleMatch[1].replace('年','')) : dateObj.getFullYear();
+      const start = new Date(year, parseInt(singleMatch[2])-1, parseInt(singleMatch[3]));
+      return dateObj.getTime() === start.getTime();
+    }
+    return false;
+  });
+
+  // Show filter info
+  const info = document.getElementById('calFilterInfo');
+  const text = document.getElementById('calFilterText');
+  info.style.display = 'flex';
+  text.textContent = `📅 ${dateStr} 共有 ${filtered.length} 個優惠`;
+
+  // Temporarily replace all grids with filtered results
+  if (filtered.length > 0) {
+    const cats = ['supermarket','convenience','electronics','department'];
+    cats.forEach(cat => {
+      const items = filtered.filter(d => d.cat === cat);
+      document.getElementById('grid-'+cat).innerHTML = items.map((d,i) => renderDealCard(d,i)).join('');
+      const sec = document.querySelector('.sec-block[data-section="'+cat+'"]');
+      sec.style.display = items.length > 0 ? '' : 'none';
+    });
+    document.getElementById('featuredSection').style.display = 'none';
+    document.getElementById('forecastSection').style.display = 'none';
+
+    // Scroll to first section with results
+    const firstVisible = document.querySelector('.sec-block[style=""]');
+    if (firstVisible) {
+      const y = firstVisible.getBoundingClientRect().top + window.scrollY - 120;
+      window.scrollTo({top: y, behavior: 'smooth'});
+    }
   }
 }
 
-loadData();
+function clearCalendarFilter() {
+  selectedCalDate = null;
+  renderCalendar();
+  document.getElementById('calFilterInfo').style.display = 'none';
+
+  // Restore all sections
+  renderAll();
+  document.querySelectorAll('.sec-block').forEach(s => s.style.display = '');
+  document.getElementById('featuredSection').style.display = '';
+  document.getElementById('forecastSection').style.display = '';
+
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
 </script>
 
 </body>
